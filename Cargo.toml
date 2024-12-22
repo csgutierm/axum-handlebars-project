@@ -1,0 +1,12 @@
+[package]
+name = "axum-handlebars-project"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = { version = "0.7.9", features = ["http1"] }
+handlebars = "6.2.0"
+tokio = { version = "1.42.0", features = ["full"] }
+serde = { version = "1.0.216", features = ["derive"] }
+serde_derive = "1.0.216"
+tower-http = { version = "0.6.2", features = ["fs", "trace"] }

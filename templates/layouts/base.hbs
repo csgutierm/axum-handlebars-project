@@ -1,0 +1,20 @@
+<!-- templates/layouts/base.hbs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+    <header>
+        <h1>Mi Aplicación Axum</h1>
+    </header>
+    <main>
+        {{> @partial-block}}
+    </main>
+    <footer>
+        <p>&copy; 2024 Mi Aplicación</p>
+    </footer>
+</body>
+</html>
