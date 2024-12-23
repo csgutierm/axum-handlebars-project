@@ -58,7 +58,13 @@ async fn main() {
     let mut handlebars = Handlebars::new();
     handlebars
         .register_template_file("index", "templates/index.hbs")
-        .expect("Error registering template");
+        .expect("Error registering index template");
+    handlebars
+        .register_template_file("navbar", "./templates/layouts/navbar.hbs")
+        .expect("Error registering navbar template");
+    handlebars
+        .register_template_file("footer", "./templates/layouts/footer.hbs")
+        .expect("Error registering footer template");
     handlebars
         .register_template_file("error/404", "templates/error/404.hbs")
         .expect("Error registering 404 template");
@@ -73,9 +79,7 @@ async fn main() {
             let hb = handlebars.clone();
             move || index(hb)
         }))
-        .route("/static/*path", get_service(ServeDir::new("static")).handle_error(|e| async move {
-            (StatusCode::INTERNAL_SERVER_ERROR, format!("Internal Server Error: {}", e))
-        }))
+        .nest_service("/static", ServeDir::new("static"))
         .fallback({
             let hb = handlebars.clone();
             move || not_found(hb)
@@ -87,5 +91,11 @@ async fn main() {
     
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     println!("Archivos estáticos disponibles en http://{}/static", addr);
+
+    println!("Verificando archivos:");
+        for file in ["favicon.ico", "reaching_sky.avif", "Yuragi.png"] {
+            let path = std::path::Path::new("static").join(file);
+            println!("{}: {}", file, path.exists());
+        }
     axum::serve(listener, app).await.unwrap();
 }
