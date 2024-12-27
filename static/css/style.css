@@ -1,0 +1,10 @@
+.imagen {
+    width: 450px;
+    border-radius: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .imagen {
+      width: 90%;
+    }
+  }
